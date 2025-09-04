@@ -1,0 +1,21 @@
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import (
+    UserViewSet, ShopStrengthViewSet, CoachViewSet, InspectionViewSet,
+    DefectViewSet, AttendanceViewSet, FeedbackViewSet, backup_csv
+)
+
+# Router will automatically create routes for our ViewSets
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'shopstrength', ShopStrengthViewSet)
+router.register(r'coaches', CoachViewSet)
+router.register(r'inspections', InspectionViewSet)
+router.register(r'defects', DefectViewSet)
+router.register(r'attendance', AttendanceViewSet)
+router.register(r'feedback', FeedbackViewSet)
+
+urlpatterns = [
+    path('', include(router.urls)),       # all ViewSets under /api/
+    path('backup/', backup_csv, name="backup"),  # CSV backup endpoint
+]
