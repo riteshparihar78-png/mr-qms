@@ -3,13 +3,11 @@ services:
     name: qms-backend
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi_entry:application --preload --timeout 120
+    startCommand: gunicorn wsgi_scout:application --preload --timeout 120
     postDeployCommand: |
       python manage.py migrate --noinput
       python manage.py collectstatic --noinput || true
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: backend.settings
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
